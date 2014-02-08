@@ -141,7 +141,7 @@ a.cell:hover {
 	opacity: .75;
 	transition: opacity .25s;
 }
-a.cell.test {
+a.cell.highlighted {
 	opacity: .75;
 	transition: opacity .25s;
 }

@@ -21,22 +21,31 @@ angular.module('pointMotion',[])
 		
 	})
 
-	$scope.selectCar = function(selectedCar){
+	$scope.selectCar = function(selectedCar, cb){
 		selectedCar.selected = true;
 		//getCars(selectedCar, function(data){
 		//	cars = data;
 		//})
+		cb($scope.cars);
 	}
 
 	var my_controller = new Leap.Controller({enableGestures: true});
-  	
+  	var petaIsAPedo = false;
   	my_controller.on('frame', function(frame_instance){ 
-  	
+
   	frame_instance.gestures.forEach(function(g){
+		if(!petaIsAPedo)
+  		{
+	  		$('html, body').animate({
+	        	scrollTop: $('[name="menu"]').offset().top
+	    	}, 500);
+	    	petaIsAPedo = false;
+  		}
   		if(g.type == "swipe")
   		{
   			var x = (g.position[0] + 200) / 400;
   			var y = (g.position[1] ) / 400;
+  			var z = g.position[2];
 
   			x = Math.max(x,0);
   			x = Math.min(x,1);
@@ -46,17 +55,29 @@ angular.module('pointMotion',[])
 			y = Math.max(y,0);
   			y = Math.min(y,1);
   			y = Math.round(y);
-
   			y = !y;
 
-  			console.log("x: " + x);
-  			console.log("y: " + y);
+
+
+  			//console.log("x: " + x);
+  			//console.log("y: " + y);
+  			//console.log("z: " + z);
+  			var clicked = false;
+  			if(!clicked & z < -100)
+  			{
+  				clicked = true;
+  				selectCar($scope.cars[x + (y * 4)], function(data){
+  					$scope.cars = data;
+  					$scope.apply();
+  					clicked = false;
+  				});
+  			}
 
   			$scope.cars.forEach(function(el){
-  				el.selected = false;
+  				el.highlighted = false;
   			});
   			
-  			$scope.cars[x + (y * 4)].selected = true;
+  			$scope.cars[x + (y * 4)].highlighted = true;
   			$scope.$apply();
   		}
   		
