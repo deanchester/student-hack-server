@@ -131,6 +131,7 @@ a.transparent-black {
 	margin: 0 auto;
 }
 a.cell {
+	border-radius: 8px;
 	float: left;
 	width: 25%;
 	opacity: 1;
@@ -145,14 +146,17 @@ a.cell.test {
 	transition: opacity .25s;
 }
 .cell-wrapper {
+	border-radius: 8px;
 	background-color: #555;
 	margin: 25px 25px 25px 25px;
 }
 .cell-content {
 	background-color: #555;
 	height: 150px;
+	border-radius: 8px;
 }
 .cell-footer {
+	border-radius: 0px 0px 8px 8px;
 	color: #FFF;
 	height: 50px;
 	padding: 0px 10px;
