@@ -1,7 +1,7 @@
 import json
 import urllib2
 import requests
-from random import randrange
+from random import randint
 
 __access_token_url__ = "https://staging-cws.autotrader.co.uk/CoordinatedWebService/application/crs/connect/hacks/zDk2wtYF"
 
@@ -30,20 +30,26 @@ def getRandomAds(access_token, number_to_return):
     headers = {'Access-Token': access_token}
     ads = []
     for i in range(0, number_to_return):
-        parameters = {"Page_Size": 100, "Page_Number": randrange(100)}
+        pageNum = randint(1, 9)
+        parameters = {"Page_Size": 200, "Page_Number": pageNum}
         req = requests.get(__access_classified_ads__, params=parameters, headers=headers)
         reqJson = req.json()
         reqJson = convert(reqJson)
-        randAd = randrange(100)
-        adTitle = reqJson['searchResults']['classifiedAdverts'][randAd]['advertAttributes']['advertTitle']
-        adDescription = reqJson['searchResults']['classifiedAdverts'][randAd]['advertAttributes']['description']
-        adPrice = reqJson['searchResults']['classifiedAdverts'][randAd]['advertAttributes']['price']
-        adSpecs = reqJson['searchResults']['classifiedAdverts'][randAd]['vehicleAttributes']
-        ad = {'title': adTitle, 'description': adDescription, 'price': adPrice, 'car_specs': adSpecs}
+        randAd = randint(1, 9)
+        ad = createCar(reqJson, randAd)
         ads.append(ad)
     adsChanged = {"cars": ads}
     return adsChanged
 
+def createCar(jsonResp, advert_number)
+    """
+    This method creates a car object from the data retrived from autotrader.
+    """
+    adTitle = jsonResp['searchResults']['classifiedAdverts'][advert_number]['advertAttributes']['advertTitle']
+    adDescription = jsonResp['searchResults']['classifiedAdverts'][advert_number]['advertAttributes']['description']
+    adPrice = jsonResp['searchResults']['classifiedAdverts'][advert_number]['advertAttributes']['price']
+    adSpecs = jsonResp['searchResults']['classifiedAdverts'][advert_number]['vehicleAttributes']
+    return {'title': adTitle, 'description': adDescription, 'price': adPrice, 'car_specs': adSpecs}
 
 def convert(input):
     """
