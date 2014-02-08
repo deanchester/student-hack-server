@@ -119,6 +119,7 @@ a.transparent-black {
 
 .menu {
 	background-color: #CCC;
+	overflow: auto;
 }
 .menu .banner-text{
 	margin-top: 0;
