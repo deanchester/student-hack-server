@@ -1,23 +1,40 @@
 <!doctype html>
 <html ng-app="pointMotion">
-
 	<head>
+		<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<script type="text/javascript" src="js/display.js"></script>
+
+		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>
+		<script type="text/javascript" src="js/main.js"></script>
+		<script type="text/javascript" src="js/angular-leap.min.js"></script>
+		<script type="text/javascript" src="js/leap.min.js"></script>
+
+		<link rel="stylesheet" href="lib/font-awesome/css/font-awesome.min.css">
+
 		<title>PointMotion</title>
 	</head>
-
 	<body>
-		<div ng-controller="mainController">
-			<point-motion-car-list cars='cars'></point-motion-car-list>
+		<div class="wrapper">
+			<div id="banner" class="banner">
+				<img src="img/autotrader.png" class="banner-image" />
+				<div class="banner-text"><h1>Find your dream drive. Now.</h1></div>
+				<a id="activate" href="#menu" class="button large transparent-black">Step up to this monitor to begin your search</a>
+				<div class="tagline">
+					<p class="tagline-1">Powered by</p>
+					<p class="tagline-2">PointMotion</p>
+					<p class="tagline-3">Created at</p>
+					<img src="img/studenthack.png" class="studenthack-image" />
+				</div>
+			</div>
+			<div id="menu" class="menu">
+				<a name="menu"></a>
+				<div class="banner-text"><h1>Do any of these cars interest you?</h1></div>
+				<div ng-controller="mainController" class="grid">
+					<point-motion-car-list cars='cars'></point-motion-car-list>
+				</div>
+			</div>
 		</div>
-
-
 	</body>
-
-
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>
-	
-	<script type="text/javascript" src="js/main.js"></script>
-	<script type="text/javascript" src="js/angular-leap.min.js"></script>
-	<script type="text/javascript" src="js/leap.min.js"></script>
 </html>

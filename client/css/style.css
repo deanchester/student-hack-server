@@ -40,6 +40,7 @@ h2 {
 	background-position: bottom;
 	background-size: cover;
 	overflow: hidden;
+	box-shadow: 0 0 60px rgba(0, 0, 0, .2);
 }
 .banner-image {
 	width: 200px;
@@ -119,7 +120,7 @@ a.transparent-black {
 
 .menu {
 	background-color: #CCC;
-	overflow: auto;
+	overflow: hidden;
 }
 .menu .banner-text{
 	margin-top: 0;
