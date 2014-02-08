@@ -41,7 +41,7 @@ def getRandomAds(access_token, number_to_return):
     adsChanged = {"cars": ads}
     return adsChanged
 
-def createCar(jsonResp, advert_number)
+def createCar(jsonResp, advert_number):
     """
     This method creates a car object from the data retrived from autotrader.
     """
