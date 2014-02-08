@@ -138,6 +138,10 @@ a.cell:hover {
 	opacity: .75;
 	transition: opacity .25s;
 }
+a.cell.test {
+	opacity: .75;
+	transition: opacity .25s;
+}
 .cell-wrapper {
 	background-color: #555;
 	margin: 25px 25px 25px 25px;

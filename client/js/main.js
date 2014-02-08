@@ -47,6 +47,7 @@ angular.module('pointMotion',[])
   			y = Math.min(y,1);
   			y = Math.round(y);
 
+  			y = !y;
 
   			console.log("x: " + x);
   			console.log("y: " + y);
