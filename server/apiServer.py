@@ -98,7 +98,8 @@ def getUpdatedAds(access_token, cars):
         pageNum = randint(1, 9)
         parameters = {"Page_Size": 200, "Page_Number": pageNum}
         #TODO!!!
-        if()
+        if(True):
+            print "Hello"
 
         req = requests.get(__access_classified_ads__, params=parameters, headers=headers)
         reqJson = req.json()
