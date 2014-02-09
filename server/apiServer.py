@@ -69,7 +69,7 @@ def getUpdatedAds(access_token, cars, number_to_return):
         prices.append(i["price"])
 
         try:
-            mileages.append(i["car_specs"]["mileage"])
+            int(mileages.append(i["car_specs"]["mileage"]))
         except:
             pass
 
@@ -85,11 +85,7 @@ def getUpdatedAds(access_token, cars, number_to_return):
 
     meanPrice, stdPrice = meanstdv(prices)
     if(len(mileages) >= 2):
-        if(mileages.count(0) == 2):
-            meanMileage = 0
-            stdMileage = 0
-        else:
-            meanMileage, stdMileage = meanstdv(mileages)
+        meanMileage, stdMileage = meanstdv(mileages)
     else:
         meanMileage = 0
         stdMileage = 0
