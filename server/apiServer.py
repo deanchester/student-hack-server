@@ -56,7 +56,9 @@ def createCar(jsonResp, advert_number):
     adDescription = jsonResp['searchResults']['classifiedAdverts'][advert_number]['advertAttributes']['description']
     adPrice = jsonResp['searchResults']['classifiedAdverts'][advert_number]['advertAttributes']['price']
     adSpecs = jsonResp['searchResults']['classifiedAdverts'][advert_number]['vehicleAttributes']
-    return {'title': adTitle, 'description': adDescription, 'price': adPrice, 'car_specs': adSpecs, 'image': images[randint(0,99)], 'condition': adCondition}
+    del adSpecs["vrm"]
+    toReturn =  {"title": adTitle, 'description': adDescription, 'price': adPrice, 'car_specs': adSpecs, "image": images[randint(0,99)], "car_condition": adCondition}
+    return dict((k.encode('ascii'), v) for (k, v) in toReturn.items())
 
 def getUpdatedAds(access_token, cars, number_to_return):
     """
@@ -82,7 +84,7 @@ def getUpdatedAds(access_token, cars, number_to_return):
             pass
 
         try:
-            engineSizes.append(i["car_specs"]["engineSize"])
+            engineSizes.append(int(i["car_specs"]["engineSize"]))
         except:
             pass
 
