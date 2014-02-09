@@ -7,29 +7,23 @@ import tornado.escape
 import apiServer
 import json
 
-__str_cookie_name__ = "iteriation"
-
-
-carsSelected = []
+__str_cookie_name__ = "cars"
 
 class HandleComms(tornado.web.RequestHandler):
     def get(self):
         accessToken = apiServer.getAccessToken()
         randomAdverts = apiServer.getRandomAds(accessToken, 8)
         self.write(tornado.escape.json_encode(randomAdverts))
-        self.set_cookie(__str_cookie_name__, str(1))
 
 
     def post(self):
-        iteriation = self.get_cookie(__str_cookie_name__)
-        accessToken = apiServer.getAccessToken()
-
-        print self.request.body
         car = tornado.escape.json_decode(self.request.body)
         car = apiServer.convert(car)
-        carsSelected.append(car)
-        if(len(carsSelected) >= 3):
-            nextAdverts = apiServer.getUpdatedAds(accessToken, carsSelected, 8)
+        self.set_cookie(__str_cookie_name__, tornado.escape.json_encode([self.get_cookie(__str_cookie_name__), car]))
+        accessToken = apiServer.getAccessToken()
+        cars = tornado.escape.json_decode(self.get_cookie(__str_cookie_name__))
+        if(len(cars) >= 3):
+            nextAdverts = apiServer.getUpdatedAds(accessToken, cars, 8)
             self.write(tornado.escape.json_encode(nextAdverts))
         else:
             randomAdverts = apiServer.getRandomAds(accessToken, 8)
