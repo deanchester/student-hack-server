@@ -120,10 +120,11 @@ a.transparent-black {
 /* menus */
 
 .menu {
-	background-image: url('../img/landscape3_blur.jpg');
+/*	background-image: url('../img/landscape3_blur.jpg');
 	background-repeat: no-repeat; 
 	background-position: bottom;
-	background-size: cover;
+	background-size: cover;*/
+	background-color: #59C;
 	overflow: hidden;
 }
 .menu .banner-text {
