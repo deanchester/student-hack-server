@@ -33,7 +33,7 @@
 				<img src="img/autotrader.png" class="banner-image" />
 				<div class="banner-text"><h1>Which of these cars interest you?</h1></div>
 				<div ng-controller="mainController" class="grid">
-					<point-motion-car-list cars='cars' select='selectCar'></point-motion-car-list>
+					<point-motion-car-list cars='cars' select='selectCar' ng-hide="loading"></point-motion-car-list>
 				</div>
 			</div>
 		</div>
