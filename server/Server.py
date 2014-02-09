@@ -23,13 +23,11 @@ class HandleComms(tornado.web.RequestHandler):
         iteriation = self.get_cookie(__str_cookie_name__)
         accessToken = apiServer.getAccessToken()
         car = json.loads(self.request.body)
-        if(len(carsSelected) == 3):
-            nextAdverts = apiServer.getUpdatedAds(iteriation, accessToken, car)
-            iteriation += 1
-            iteriation = self.set_cookie(__str_cookie_name__, str(iteriation))
+        carsSelected.append(car)
+        if(len(carsSelected) >= 3):
+            nextAdverts = apiServer.getUpdatedAds(accessToken, carsSelected)
             self.write(json.dumps(nextAdverts))
         else:
-            carsSelected.append(car)
             randomAdverts = apiServer.getRandomAds(accessToken, 10)
             self.write(json.dumps(randomAdverts))
             self.set_cookie(__str_cookie_name__, str(len(carsSelected)))
