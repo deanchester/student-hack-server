@@ -1,4 +1,4 @@
-var urlToAccess = "http://107.170.46.41/cars";
+var urlToAccess = "http://localhost:1337";
 angular.module('pointMotion',[])
 
 .config(function (){
@@ -7,16 +7,22 @@ angular.module('pointMotion',[])
 
 .controller('mainController',function($scope, cars, getCars, $http){
 
-	$http.get(urlToAccess).success(function(data){
+	$http.get(urlToAccess,{headers:{'Content-Type': 'application/json'}}).success(function(data){
 		console.log(data);
-		$scope.cars = data.cars;
+		$scope.cars = data;
 	});
+	$scope.loading = false;
 
 	$scope.selectCar = function(selectedCar){
 		//selectedCar.selected = true;
+		$scope.loading = true;
 		getCars(selectedCar, function(data){
 			$scope.cars = data;
+			$scope.loading = false;
 		});
+		$scope.cars.forEach(function(el){
+  				el.highlighted = false;
+  			});
 	}
 
 	var my_controller = new Leap.Controller({enableGestures: true});
@@ -57,9 +63,11 @@ angular.module('pointMotion',[])
   			if(!clicked & z < -100)
   			{
   				clicked = true;
+  				$scope.loading = true;
   				getCars($scope.cars[x + (y * 4)], function(data){
   					$scope.cars = data;
   					clicked = false;
+  					$scope.loading = false;
   					console.log(data);
   				});
   			}
@@ -107,8 +115,8 @@ angular.module('pointMotion',[])
 .factory('getCars', ['$http', 'cars',function($http, cars) {
   return function(car, callback){
   	console.log('loading...');
-  	$http.post(urlToAccess, car).success(function(data){
-  		callback(data.cars);
+  	$http.post(urlToAccess, car,{headers:{'Content-Type': 'application/json'}}).success(function(data){
+  		callback(data);
   	});
   };
 }])
