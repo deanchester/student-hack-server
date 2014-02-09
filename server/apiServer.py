@@ -61,7 +61,7 @@ def getUpdatedAds(access_token, cars, number_to_return):
     mileages = []
     transmissions = []
     engineSizes = []
-    for i in list:
+    for i in cars:
         prices.append(i["price"])
 
         try:
