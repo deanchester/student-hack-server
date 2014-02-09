@@ -20,7 +20,7 @@
 			<div id="banner" class="banner">
 				<img src="img/autotrader.png" class="banner-image" />
 				<div class="banner-text"><h1>Find your dream drive. Now.</h1></div>
-				<a id="activate" href="#menu" class="button large transparent-black">Step up to this monitor to begin your search</a>
+				<a href="#menu" id="activate-1" class="button large transparent-black">Step up to this monitor to begin your search</a>
 				<div class="tagline">
 					<p class="tagline-1">Powered by</p>
 					<p class="tagline-2">PointMotion</p>
@@ -30,7 +30,8 @@
 			</div>
 			<div id="menu" class="menu">
 				<a name="menu"></a>
-				<div class="banner-text"><h1>Do any of these cars interest you?</h1></div>
+				<img src="img/autotrader.png" class="banner-image" />
+				<div class="banner-text"><h1>Which of these cars interest you?</h1></div>
 				<div ng-controller="mainController" class="grid">
 					<point-motion-car-list cars='cars'></point-motion-car-list>
 				</div>

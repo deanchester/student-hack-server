@@ -1,11 +1,24 @@
 <div ng-repeat="car in cars">
-					<a href="#" class="cell" ng-class="{highlighted:car.highlighted}">
-						<div class="cell-wrapper">
-							<div class="cell-content">
-							</div>
+					<div class="cell" >
+						<a href="#" class="cell-wrapper" ng-class="{highlighted:car.highlighted}">
+							<img class="cell-image" src="img/landscape_blur.jpg" />
 							<div class="cell-footer">
-								{{car.selected}}
+								<div class="cell-footer-left">
+									<strong>Make:</strong> Vauxhall<br />
+									<strong>Model:</strong> Astra<br />
+									<strong>Condition:</strong> New<br />
+									<strong>Year:</strong> 2013<br />
+									<strong>Mileage:</strong> -
+								</div>
+								<div class="cell-footer-right">
+									<strong>Transmission:</strong> Manual<br />
+									<strong>Number of Doors:</strong> 5<br />
+									<strong>Fuel:</strong> Petrol<br />
+									<strong>Engine Size:</strong> 1.6L<br />
+									<strong>Color:</strong> Red
+									{{car.selected}}
+								</div>
 							</div>
-						</div>
-					</a>
+						</a>
+					</div>
 </div>

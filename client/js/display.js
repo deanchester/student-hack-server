@@ -5,16 +5,13 @@ $(document).ready(function() {
 	$('#banner').css('height', $(window).height());
 	$('#menu').css('height', $(window).height());
 
-	$('#activate').click(function () {
+	$('#activate-1').click(function () {
 		console.log("activate");
     	$('html, body').animate({
         	scrollTop: $('[name="' + $.attr(this, 'href').substr(1) + '"]').offset().top
     	}, 500);
     	return false;
 	});
-
-	//setInterval(changeBackground, 5000);
-
 });
 
 $(window).resize(function() {
@@ -23,7 +20,3 @@ $(window).resize(function() {
 	$('#menu').css('height', $(window).height());
 
 });
-
-function changeBackground() {
-
-}
