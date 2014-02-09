@@ -1,5 +1,6 @@
+var urlToAccess = "http://107.170.46.41/cars";
 angular.module('pointMotion',[])
-var urlToAccess = "http://107.170.46.41/cars"
+
 .config(function (){
 	
 })
