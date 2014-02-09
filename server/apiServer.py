@@ -51,7 +51,7 @@ def createCar(jsonResp, advert_number):
     adSpecs = jsonResp['searchResults']['classifiedAdverts'][advert_number]['vehicleAttributes']
     return {'title': adTitle, 'description': adDescription, 'price': adPrice, 'car_specs': adSpecs, 'image': images[randint(0,100)]}
 
-def getUpdatedAds(access_token, cars):
+def getUpdatedAds(access_token, cars, number_to_return):
     """
     This method looks at the previously selected cars to get an idea what they want.
     """
@@ -97,7 +97,7 @@ def getUpdatedAds(access_token, cars):
         meanengineSizes = 0
         stdengineSizes = 0
     for i in range(0, number_to_return):
-        pageNum = randint(1, 9)
+        pageNum = randint(1,12)
         parameters = {"Page_Size": 20, "Page_Number": pageNum}
         if(meanPrice != 0):
             maxPrice = meanPrice + stdPrice
