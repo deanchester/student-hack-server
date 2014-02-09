@@ -1,21 +1,20 @@
 <div ng-repeat="car in cars">
 					<div class="cell">
 						<a ng-click="select(car)" class="cell-wrapper" ng-class="{highlighted:car.highlighted}">
-							<img class="cell-image" src="img/landscape_blur.jpg"  ng-src="{{car.image}}"/>
+							<img class="cell-image" src="img/landscape_blur.jpg"  ng-src="{{car.imageUrl}}"/>
 							<div class="cell-footer">
 								<div class="cell-footer-left">
-									<strong>Make:</strong> {{car.car_specs.make}}<br />
-									<strong>Model:</strong> {{car.car_specs.model}}<br />
-									<strong>Condition:</strong> {{car.car_specs.condition}}<br />
-									<strong>Year:</strong> {{car.car_specs.yearOfManufacture}}<br />
-									<strong>Mileage:</strong> - {{car.car_specs.mileage}}{{car.car_specs.vehicleMileageUnit}}
+									<strong>Make:</strong> {{car.vehicleAttributes.make}}<br />
+									<strong>Model:</strong> {{car.vehicleAttributes.model}}<br />
+									<strong>Year:</strong> {{car.vehicleAttributes.yearOfManufacture}}<br />
+									<strong>Mileage:</strong> - {{car.vehicleAttributes.mileage}}{{car.vehicleAttributes.vehicleMileageUnit}}
 								</div>
 								<div class="cell-footer-right">
-									<strong>Transmission:</strong> {{car.car_specs.transmission}}<br />
-									<strong>Number of Doors:</strong> {{car.car_specs.numDoors}}<br />
-									<strong>Fuel:</strong> {{car.car_specs.fuelType}}<br />
-									<strong>Engine Size:</strong> {{car.car_specs.engineSize}}<br />
-									<strong>Price:</strong> £{{car.price}}
+									<strong>Transmission:</strong> {{car.vehicleAttributes.transmission}}<br />
+									<strong>Number of Doors:</strong> {{car.vehicleAttributes.numDoors}}<br />
+									<strong>Fuel:</strong> {{car.vehicleAttributes.fuelType}}<br />
+									<strong>Engine Size:</strong> {{car.vehicleAttributes.engineSize}}<br />
+									<strong>Price:</strong> £{{car.advertAttributes.price}}
 								</div>
 							</div>
 						</a>
