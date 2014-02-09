@@ -1,3 +1,4 @@
+var urlToAccess = "http://107.170.46.41/cars";
 angular.module('pointMotion',[])
 
 .config(function (){
@@ -6,7 +7,7 @@ angular.module('pointMotion',[])
 
 .controller('mainController',function($scope, cars, getCars, $http){
 
-	$http.get('http://107.170.46.41/cars').success(function(data){
+	$http.get(urlToAccess).success(function(data){
 		console.log(data);
 		$scope.cars = data.cars;
 	});
@@ -106,7 +107,7 @@ angular.module('pointMotion',[])
 .factory('getCars', ['$http', 'cars',function($http, cars) {
   return function(car, callback){
   	console.log('loading...');
-  	$http.post('http://107.170.46.41/cars', car).success(function(data){
+  	$http.post(urlToAccess, car).success(function(data){
   		callback(data.cars);
   	});
   };

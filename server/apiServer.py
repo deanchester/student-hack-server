@@ -2,6 +2,9 @@ import json
 import urllib2
 import requests
 from random import randint
+import itertools
+import operator
+
 
 __access_token_url__ = "https://staging-cws.autotrader.co.uk/CoordinatedWebService/application/crs/connect/hacks/zDk2wtYF"
 
@@ -69,7 +72,7 @@ def getUpdatedAds(access_token, cars, number_to_return):
         prices.append(i["price"])
 
         try:
-            mileages.append(i["car_specs"]["mileage"])
+            mileages.append(int(i["car_specs"]["mileage"]))
         except:
             pass
 
