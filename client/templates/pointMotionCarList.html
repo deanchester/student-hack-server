@@ -1,7 +1,7 @@
 <div ng-repeat="car in cars">
 					<div class="cell" >
 						<a href="#" class="cell-wrapper" ng-class="{highlighted:car.highlighted}">
-							<img class="cell-image" src="img/landscape_blur.jpg" />
+							<img class="cell-image" src="img/landscape_blur.jpg"  ng-src="{{car.image}}"/>
 							<div class="cell-footer">
 								<div class="cell-footer-left">
 									<strong>Make:</strong> Vauxhall<br />
@@ -15,8 +15,7 @@
 									<strong>Number of Doors:</strong> 5<br />
 									<strong>Fuel:</strong> Petrol<br />
 									<strong>Engine Size:</strong> 1.6L<br />
-									<strong>Color:</strong> Red
-									{{car.selected}}
+									<strong>Price:</strong> {{car.price}}
 								</div>
 							</div>
 						</a>
