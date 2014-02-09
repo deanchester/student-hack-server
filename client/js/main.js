@@ -11,16 +11,16 @@ angular.module('pointMotion',[])
 		$scope.cars = data.cars;
 	});
 
-	$scope.selectCar = function(selectedCar, cb){
+	$scope.selectCar = function(selectedCar){
 		//selectedCar.selected = true;
 		getCars(selectedCar, function(data){
-			cars = data;
+			$scope.cars = data;
 		});
-		cb($scope.cars);
 	}
 
 	var my_controller = new Leap.Controller({enableGestures: true});
   	var petaIsAPedo = false;
+  	var clicked = false;
   	my_controller.on('frame', function(frame_instance){ 
 
   	frame_instance.gestures.forEach(function(g){
@@ -52,14 +52,14 @@ angular.module('pointMotion',[])
   			//console.log("x: " + x);
   			//console.log("y: " + y);
   			//console.log("z: " + z);
-  			var clicked = false;
+  			
   			if(!clicked & z < -100)
   			{
   				clicked = true;
   				getCars($scope.cars[x + (y * 4)], function(data){
   					$scope.cars = data;
-  					$scope.$apply();
   					clicked = false;
+  					console.log(data);
   				});
   			}
 
@@ -85,7 +85,7 @@ angular.module('pointMotion',[])
 		// name: '',
 		// priority: 1,
 		// terminal: true,
-		scope: {cars:'='}, // {} = isolate, true = child, false/undefined = no change
+		scope: {cars:'=', select:'='}, // {} = isolate, true = child, false/undefined = no change
 		// controller: function($scope, $element, $attrs, $transclude) {},
 		// require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
 		restrict: 'E', // E = Element, A = Attribute, C = Class, M = Comment
@@ -95,9 +95,7 @@ angular.module('pointMotion',[])
 		transclude: true,
 		// compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
 		link: function($scope, iElm, iAttrs, controller, cars) {
-			$scope.$watch('cars', function(cars) {
-
-		     });
+			//$scope.selectFunction = $scope.select();
 		}
 	};
 }])
@@ -109,7 +107,7 @@ angular.module('pointMotion',[])
   return function(car, callback){
   	console.log('loading...');
   	$http.post('http://107.170.46.41/cars', car).success(function(data){
-  		callback(data);
+  		callback(data.cars);
   	});
   };
 }])
