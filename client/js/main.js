@@ -1,36 +1,27 @@
+var urlToAccess = "http://107.170.46.41/cars";
 angular.module('pointMotion',[])
 
 .config(function (){
 	
 })
 
-.controller('mainController',function($scope, cars, getCars){
-	$scope.cars = [
-		{name:'test', whatever:'klfdjlsa'},
-		{name:'test1', whatever:'klfdjlsa'},
-		{name:'test2', whatever:'klfdjlsa'},
-		{name:'test3', whatever:'klfdjlsa'},
-		{name:'test4', whatever:'klfdjlsa'},
-		{name:'test4', whatever:'klfdjlsa'},
-		{name:'test4', whatever:'klfdjlsa'},
-		{name:'test4', whatever:'klfdjlsa'},
-		];
+.controller('mainController',function($scope, cars, getCars, $http){
 
-	getCars(null, function(data){
-		//cars = data;
-		
-	})
+	$http.get(urlToAccess).success(function(data){
+		console.log(data);
+		$scope.cars = data.cars;
+	});
 
-	$scope.selectCar = function(selectedCar, cb){
-		selectedCar.selected = true;
-		//getCars(selectedCar, function(data){
-		//	cars = data;
-		//})
-		cb($scope.cars);
+	$scope.selectCar = function(selectedCar){
+		//selectedCar.selected = true;
+		getCars(selectedCar, function(data){
+			$scope.cars = data;
+		});
 	}
 
 	var my_controller = new Leap.Controller({enableGestures: true});
   	var petaIsAPedo = false;
+  	var clicked = false;
   	my_controller.on('frame', function(frame_instance){ 
 
   	frame_instance.gestures.forEach(function(g){
@@ -62,14 +53,14 @@ angular.module('pointMotion',[])
   			//console.log("x: " + x);
   			//console.log("y: " + y);
   			//console.log("z: " + z);
-  			var clicked = false;
+  			
   			if(!clicked & z < -100)
   			{
   				clicked = true;
-  				selectCar($scope.cars[x + (y * 4)], function(data){
+  				getCars($scope.cars[x + (y * 4)], function(data){
   					$scope.cars = data;
-  					$scope.apply();
   					clicked = false;
+  					console.log(data);
   				});
   			}
 
@@ -95,7 +86,7 @@ angular.module('pointMotion',[])
 		// name: '',
 		// priority: 1,
 		// terminal: true,
-		scope: {cars:'='}, // {} = isolate, true = child, false/undefined = no change
+		scope: {cars:'=', select:'='}, // {} = isolate, true = child, false/undefined = no change
 		// controller: function($scope, $element, $attrs, $transclude) {},
 		// require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
 		restrict: 'E', // E = Element, A = Attribute, C = Class, M = Comment
@@ -105,10 +96,7 @@ angular.module('pointMotion',[])
 		transclude: true,
 		// compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
 		link: function($scope, iElm, iAttrs, controller, cars) {
-			$scope.$watch('cars', function(cars) {
-				console.log("watch");
-		        console.log(cars);
-		     });
+			//$scope.selectFunction = $scope.select();
 		}
 	};
 }])
@@ -118,9 +106,10 @@ angular.module('pointMotion',[])
 
 .factory('getCars', ['$http', 'cars',function($http, cars) {
   return function(car, callback){
-  	$http.post('url to server', car, function(data){
-  		callback(data);
-  	})
+  	console.log('loading...');
+  	$http.post(urlToAccess, car).success(function(data){
+  		callback(data.cars);
+  	});
   };
 }])
 

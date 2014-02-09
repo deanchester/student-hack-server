@@ -22,7 +22,8 @@ class HandleComms(tornado.web.RequestHandler):
     def post(self):
         iteriation = self.get_cookie(__str_cookie_name__)
         accessToken = apiServer.getAccessToken()
-        car = json.loads(self.request.body)
+        car = tornado.escape.json_decode(self.request.body)
+        car = apiServer.convert(car)
         carsSelected.append(car)
         if(len(carsSelected) >= 3):
             nextAdverts = apiServer.getUpdatedAds(accessToken, carsSelected, 8)

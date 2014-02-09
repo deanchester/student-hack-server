@@ -2,6 +2,9 @@ import json
 import urllib2
 import requests
 from random import randint
+import itertools
+import operator
+
 
 __access_token_url__ = "https://staging-cws.autotrader.co.uk/CoordinatedWebService/application/crs/connect/hacks/zDk2wtYF"
 
@@ -45,11 +48,15 @@ def createCar(jsonResp, advert_number):
     """
     This method creates a car object from the data retrived from autotrader.
     """
+    if(jsonResp['searchResults']['classifiedAdverts'][advert_number]['advertAttributes']['isNearlyNew'] == True):
+        adCondition = "Nearly New"
+    else:
+        adCondition = "Used"
     adTitle = jsonResp['searchResults']['classifiedAdverts'][advert_number]['advertAttributes']['advertTitle']
     adDescription = jsonResp['searchResults']['classifiedAdverts'][advert_number]['advertAttributes']['description']
     adPrice = jsonResp['searchResults']['classifiedAdverts'][advert_number]['advertAttributes']['price']
     adSpecs = jsonResp['searchResults']['classifiedAdverts'][advert_number]['vehicleAttributes']
-    return {'title': adTitle, 'description': adDescription, 'price': adPrice, 'car_specs': adSpecs, 'image': images[randint(0,100)]}
+    return {'title': adTitle, 'description': adDescription, 'price': adPrice, 'car_specs': adSpecs, 'image': images[randint(0,99)], 'condition': adCondition}
 
 def getUpdatedAds(access_token, cars, number_to_return):
     """
@@ -61,11 +68,11 @@ def getUpdatedAds(access_token, cars, number_to_return):
     mileages = []
     transmissions = []
     engineSizes = []
-    for i in list:
+    for i in cars:
         prices.append(i["price"])
 
         try:
-            mileages.append(i["car_specs"]["mileage"])
+            mileages.append(int(i["car_specs"]["mileage"]))
         except:
             pass
 
