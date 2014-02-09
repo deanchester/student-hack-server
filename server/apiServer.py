@@ -45,11 +45,15 @@ def createCar(jsonResp, advert_number):
     """
     This method creates a car object from the data retrived from autotrader.
     """
+    if(jsonResp['searchResults']['classifiedAdverts'][advert_number]['advertAttributes']['isNearlyNew'] == True):
+        adCondition = "Nearly New"
+    else:
+        adCondition = "Used"
     adTitle = jsonResp['searchResults']['classifiedAdverts'][advert_number]['advertAttributes']['advertTitle']
     adDescription = jsonResp['searchResults']['classifiedAdverts'][advert_number]['advertAttributes']['description']
     adPrice = jsonResp['searchResults']['classifiedAdverts'][advert_number]['advertAttributes']['price']
     adSpecs = jsonResp['searchResults']['classifiedAdverts'][advert_number]['vehicleAttributes']
-    return {'title': adTitle, 'description': adDescription, 'price': adPrice, 'car_specs': adSpecs, 'image': images[randint(0,100)]}
+    return {'title': adTitle, 'description': adDescription, 'price': adPrice, 'car_specs': adSpecs, 'image': images[randint(0,100)], 'condition': adCondition}
 
 def getUpdatedAds(access_token, cars, number_to_return):
     """
