@@ -85,7 +85,11 @@ def getUpdatedAds(access_token, cars, number_to_return):
 
     meanPrice, stdPrice = meanstdv(prices)
     if(len(mileages) >= 2):
-        meanMileage, stdMileage = meanstdv(mileages)
+        if(mileages.count(0) == 2):
+            meanMileage = 0
+            stdMileage = 0
+        else:
+            meanMileage, stdMileage = meanstdv(mileages)
     else:
         meanMileage = 0
         stdMileage = 0
