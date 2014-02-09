@@ -19,7 +19,10 @@ class HandleComms(tornado.web.RequestHandler):
     def post(self):
         car = tornado.escape.json_decode(self.request.body)
         car = apiServer.convert(car)
-        self.set_cookie(__str_cookie_name__, tornado.escape.json_encode([self.get_cookie(__str_cookie_name__), car]))
+        if(self.get_cookie(__str_cookie_name__) == None):
+            self.set_cookie(__str_cookie_name__, tornado.escape.json_encode([car]))
+        else:
+            self.set_cookie(__str_cookie_name__, tornado.escape.json_encode([self.get_cookie(__str_cookie_name__), car]))
         accessToken = apiServer.getAccessToken()
         cars = tornado.escape.json_decode(self.get_cookie(__str_cookie_name__))
         if(len(cars) >= 3):
