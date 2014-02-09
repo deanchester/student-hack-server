@@ -82,7 +82,7 @@ def getUpdatedAds(access_token, cars, number_to_return):
             pass
 
         try:
-            engineSizes.append(i["car_specs"]["engineSize"])
+            engineSizes.append(int(i["car_specs"]["engineSize"]))
         except:
             pass
 
