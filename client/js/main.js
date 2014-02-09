@@ -4,28 +4,18 @@ angular.module('pointMotion',[])
 	
 })
 
-.controller('mainController',function($scope, cars, getCars){
-	$scope.cars = [
-		{name:'test', whatever:'klfdjlsa'},
-		{name:'test1', whatever:'klfdjlsa'},
-		{name:'test2', whatever:'klfdjlsa'},
-		{name:'test3', whatever:'klfdjlsa'},
-		{name:'test4', whatever:'klfdjlsa'},
-		{name:'test4', whatever:'klfdjlsa'},
-		{name:'test4', whatever:'klfdjlsa'},
-		{name:'test4', whatever:'klfdjlsa'},
-		];
+.controller('mainController',function($scope, cars, getCars, $http){
 
-	getCars(null, function(data){
-		//cars = data;
-		
-	})
+	$http.get('http://107.170.46.41/cars').success(function(data){
+		console.log(data);
+		$scope.cars = data.cars;
+	});
 
 	$scope.selectCar = function(selectedCar, cb){
-		selectedCar.selected = true;
-		//getCars(selectedCar, function(data){
-		//	cars = data;
-		//})
+		//selectedCar.selected = true;
+		getCars(selectedCar, function(data){
+			cars = data;
+		});
 		cb($scope.cars);
 	}
 
@@ -66,9 +56,9 @@ angular.module('pointMotion',[])
   			if(!clicked & z < -100)
   			{
   				clicked = true;
-  				selectCar($scope.cars[x + (y * 4)], function(data){
+  				getCars($scope.cars[x + (y * 4)], function(data){
   					$scope.cars = data;
-  					$scope.apply();
+  					$scope.$apply();
   					clicked = false;
   				});
   			}
@@ -106,8 +96,7 @@ angular.module('pointMotion',[])
 		// compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
 		link: function($scope, iElm, iAttrs, controller, cars) {
 			$scope.$watch('cars', function(cars) {
-				console.log("watch");
-		        console.log(cars);
+
 		     });
 		}
 	};
@@ -118,9 +107,10 @@ angular.module('pointMotion',[])
 
 .factory('getCars', ['$http', 'cars',function($http, cars) {
   return function(car, callback){
-  	$http.post('url to server', car, function(data){
+  	console.log('loading...');
+  	$http.post('http://107.170.46.41/cars', car).success(function(data){
   		callback(data);
-  	})
+  	});
   };
 }])
 

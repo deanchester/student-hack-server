@@ -1,10 +1,12 @@
 <div ng-repeat="car in cars">
 					<a href="#" class="cell" ng-class="{highlighted:car.highlighted}">
 						<div class="cell-wrapper">
+						<img class='advert' ng-src="{{car.image}}">
 							<div class="cell-content">
+							{{car}}
 							</div>
 							<div class="cell-footer">
-								{{car.selected}}
+								{{car.price}}
 							</div>
 						</div>
 					</a>
