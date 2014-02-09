@@ -52,6 +52,9 @@ def createCar(jsonResp, advert_number):
     return {'title': adTitle, 'description': adDescription, 'price': adPrice, 'car_specs': adSpecs, 'image': images[randint(0,100)]}
 
 def getUpdatedAds(access_token, cars):
+    """
+    This method looks at the previously selected cars to get an idea what they want.
+    """
     headers = {'Access-Token': access_token}
     ads = []
     prices = []
@@ -76,7 +79,6 @@ def getUpdatedAds(access_token, cars):
         except:
             pass
 
-
     meanPrice, stdPrice = meanstdv(prices)
     if(len(mileages) >= 2):
         meanMileage, stdMileage = meanstdv(mileages)
@@ -89,22 +91,32 @@ def getUpdatedAds(access_token, cars):
     else:
         transmission = ""
 
-    if(len(transmissions) >= 2):
-        meanTransmission, stdTransmission = meanstdv(prices)
+    if(len(engineSizes) >= 2):
+        meanengineSizes, stdengineSizes = meanstdv(engineSizes)
     else:
-        meanTransmission = 0
-        stdTransmission = 0
+        meanengineSizes = 0
+        stdengineSizes = 0
     for i in range(0, number_to_return):
         pageNum = randint(1, 9)
-        parameters = {"Page_Size": 200, "Page_Number": pageNum}
-        #TODO!!!
-        if(True):
-            print "Hello"
-
+        parameters = {"Page_Size": 20, "Page_Number": pageNum}
+        if(meanPrice != 0):
+            maxPrice = meanPrice + stdPrice
+            minPrice = meanPrice - stdPrice
+            parameters['AT2_Maximum_Price_GBP'] = maxPrice
+            parameters['AT2_Minimum_Price_GBP'] = minPrice
+        if(meanMileage != 0):
+            maxMileage = meanMileage + stdMileage
+            minMileage = meanMileage - stdMileage
+            parameters['Maximum_Mileage'] = maxMileage
+            parameters['Minimum_Mileage'] = minMileage
+        if(transmission != ""):
+            parameters['Transmission'] = transmission
+        if(meanengineSizes != 0):
+            parameters['Engine_Size_(Cars)'] = meanengineSizes
         req = requests.get(__access_classified_ads__, params=parameters, headers=headers)
         reqJson = req.json()
         reqJson = convert(reqJson)
-        randAd = randint(1, 9)
+        randAd = randint(1, 12)
         ad = createCar(reqJson, randAd)
         ads.append(ad)
     adsChanged = {"cars": ads}
