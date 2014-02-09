@@ -57,7 +57,8 @@ def createCar(jsonResp, advert_number):
     adPrice = jsonResp['searchResults']['classifiedAdverts'][advert_number]['advertAttributes']['price']
     adSpecs = jsonResp['searchResults']['classifiedAdverts'][advert_number]['vehicleAttributes']
     del adSpecs["vrm"]
-    return {'title': adTitle, 'description': adDescription, 'price': adPrice, 'car_specs': adSpecs, 'image': images[randint(0,99)], 'condition': adCondition}
+    toReturn =  {"title": adTitle, 'description': adDescription, 'price': adPrice, 'car_specs': adSpecs, "image": images[randint(0,99)], "condition": adCondition}
+    return dict((k.encode('ascii'), v) for (k, v) in toReturn.items())
 
 def getUpdatedAds(access_token, cars, number_to_return):
     """
